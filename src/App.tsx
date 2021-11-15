@@ -1,10 +1,13 @@
 import React from 'react';
 import { ChakraProvider } from '@chakra-ui/react';
+import Todo from './components/Todo';
+import About from './components/About';
 
 function App() {
   return (
     <ChakraProvider>
-      <h1>Teste</h1>
+      <Todo />
+      <About />
     </ChakraProvider>
   );
 }
