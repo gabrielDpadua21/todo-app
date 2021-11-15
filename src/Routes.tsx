@@ -6,12 +6,10 @@ import About from './components/About';
 
 export default (props: any) => {
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route path='/' element={<Todo />} />
-                <Route path='/todo' element={<Todo />} />
-                <Route path='/about' element={<About />} />
-            </Routes>
-        </BrowserRouter>
+        <Routes>
+            <Route path='/' element={<Todo />} />
+            <Route path='/todo' element={<Todo />} />
+            <Route path='/about' element={<About />} />
+        </Routes>
     );
 }

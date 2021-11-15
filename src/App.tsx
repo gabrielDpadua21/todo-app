@@ -1,13 +1,18 @@
 import React from 'react';
-import { ChakraProvider } from '@chakra-ui/react';
-import Menu from './template/Menu';
+import { ChakraProvider, Container } from '@chakra-ui/react';
+import Navbar from './template/Menu';
 import Routes from './Routes';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 function App() {
   return (
     <ChakraProvider>
-      <Menu />
-      <Routes />
+      <Router>
+        <Navbar />
+        <Container pt={14} mxW='md'>
+          <Routes />
+        </Container>
+      </Router>
     </ChakraProvider>
   );
 }
