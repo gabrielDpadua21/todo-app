@@ -29,10 +29,10 @@ const Navbar = (props: any) => {
         <Container
             display='flex'
             p={2}
-            mxW='container.md'
             wrap='wrap'
             align='center'
             justifyContent='space-between'
+            maxW='container.lg'
         >
             <Flex align='center' mr={5}>
                 <Heading as='h1' size='lg' letterSpacing={'tighter'}>

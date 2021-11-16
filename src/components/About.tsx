@@ -4,7 +4,7 @@ import PageHeader from "../template/PageHeader";
 
 const About = () => {
     return (
-        <Container>
+        <Container maxW='container.lg'>
             <PageHeader name='Sobre' small='Nós' />
         </Container>
     )

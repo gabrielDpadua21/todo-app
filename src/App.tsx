@@ -9,7 +9,7 @@ function App() {
     <ChakraProvider>
       <Router>
         <Navbar />
-        <Container pt={14} mxW='md'>
+        <Container pt={14} maxW="container.lg">
           <PageRouter />
         </Container>
       </Router>
