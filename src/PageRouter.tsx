@@ -1,10 +1,10 @@
 import React from 'react';
-import {BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import Todo from './components/Todo';
 import About from './components/About';
 
-export default (props: any) => {
+const PageRouter = () => {
     return (
         <Routes>
             <Route path='/' element={<Todo />} />
@@ -13,3 +13,5 @@ export default (props: any) => {
         </Routes>
     );
 }
+
+export default PageRouter;
