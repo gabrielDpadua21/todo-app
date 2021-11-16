@@ -1,3 +1,13 @@
+import { Container } from "@chakra-ui/layout";
 import React from "react";
+import PageHeader from "../template/PageHeader";
 
-export default (props: any) => (<div> About </div>)
+const About = () => {
+    return (
+        <Container>
+            <PageHeader name='Sobre' small='Nós' />
+        </Container>
+    )
+}
+
+export default About;

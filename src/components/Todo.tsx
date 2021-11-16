@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import { Container, Heading } from '@chakra-ui/react';
+import { Container } from '@chakra-ui/react';
+import PageHeader from '../template/PageHeader';
 
 export default class Todo extends Component {
     render() {
         return (
             <Container>
-                <Heading as='h1'>
-                    Todo
-                </Heading>
+                <PageHeader name='Tarefas' small='Cadastro'/>
             </Container>
         )
     }
