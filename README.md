@@ -1,6 +1,6 @@
 # Project - Todo APP 💻
 
-![todo](prints/print.png)
+![todo](prints/print01.png)
 
 ---
 
