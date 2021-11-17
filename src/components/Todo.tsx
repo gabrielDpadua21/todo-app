@@ -16,6 +16,8 @@ export default class Todo extends Component<{}, {name: string, list: any}> {
         this.handleRemove = this.handleRemove.bind(this);
         this.handleMarkDone = this.handleMarkDone.bind(this);
         this.handleMarkUndone = this.handleMarkUndone.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
+        this.handleClean = this.handleClean.bind(this);
         this.refresh();
     }
 
@@ -35,32 +37,44 @@ export default class Todo extends Component<{}, {name: string, list: any}> {
 
     async handleRemove(id: number) {
         const result = await axios.delete(`${BASE_URL}/tasks/${id}`);
-        this.refresh();
+        this.refresh(this.state.name);
     }
 
     async handleMarkDone(id: number) {
         const result = await axios.put(`${BASE_URL}/tasks/${id}`, {status: true})
-        this.refresh();
+        this.refresh(this.state.name);
     }
 
     async handleMarkUndone(id: number) {
         const result = await axios.put(`${BASE_URL}/tasks/${id}`, {status: false})
+        this.refresh(this.state.name);
+    }
+
+    handleSearch() {
+        this.refresh(this.state.name);
+    }
+
+    handleClean() {
         this.refresh();
     }
 
-    async refresh() {
-        const { data } = await axios.get(`${BASE_URL}/tasks`);
-        this.setState({...this.state, name: '', list: data});
+    async refresh(_name?: string) {
+        let url = `${BASE_URL}/tasks`;
+        if(_name) url = `${url}/search/${_name}`;
+        const { data } = await axios.get(url);
+        this.setState({...this.state, name: _name ?? '', list: data});
     }
 
     render() {
         return (
             <Container maxW="container.lg">
-                <PageHeader name='Cadastro' small='Tasks'/>
+                <PageHeader name='Cadastar' small='Tasks'/>
                 <TodoForm 
                     name={this.state.name}  
                     handleAdd={this.handleAdd}
                     handleChange={this.handleChange}
+                    handleSearch={this.handleSearch}
+                    hendleClean={this.handleClean}
                 />
                 <TodoList 
                     list={this.state.list}
