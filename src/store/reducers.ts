@@ -9,7 +9,7 @@ const rootReducer = combineReducers({
             status: false
         }, {
             id: 2,
-            description: 'Meet',
+            name: 'Meet',
             status: true
         }]
     })

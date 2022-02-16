@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { 
     Table, 
     TableCaption, 
@@ -92,4 +93,6 @@ const TodoList = (props: any) => {
     )
 }
 
-export default TodoList;
+const mapStateToProps = (state: any) => ({list: state.todo.list})
+
+export default connect(mapStateToProps)(TodoList);
