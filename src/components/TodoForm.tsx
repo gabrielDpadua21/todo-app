@@ -1,9 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Button, Input, Stack } from '@chakra-ui/react';
 import { SmallAddIcon } from '@chakra-ui/icons';
 import { SearchIcon } from '@chakra-ui/icons';
 import { DeleteIcon } from '@chakra-ui/icons';
+
+import { changeName } from '../actions/todoActions';
 
 const TodoForm = (props: any) => {
 
@@ -22,7 +25,7 @@ const TodoForm = (props: any) => {
             <Input 
                 placeholder='Adcione uma task' 
                 value={props.name}
-                onChange={props.handleChange}
+                onChange={props.changeName}
                 onKeyUp={keyHandler}
             />
             <Button 
@@ -55,4 +58,6 @@ const TodoForm = (props: any) => {
 
 const mapStateToProps = (state: any) => ({ name: state.todo.name })
 
-export default connect(mapStateToProps)(TodoForm);
+const mapDispatchToProps = (dispatch: any) => bindActionCreators({ changeName }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoForm);
