@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Button, Input, Stack } from '@chakra-ui/react';
 import { SmallAddIcon } from '@chakra-ui/icons';
 import { SearchIcon } from '@chakra-ui/icons';
@@ -52,4 +53,6 @@ const TodoForm = (props: any) => {
     )
 }
 
-export default TodoForm;
+const mapStateToProps = (state: any) => ({ name: state.todo.name })
+
+export default connect(mapStateToProps)(TodoForm);
