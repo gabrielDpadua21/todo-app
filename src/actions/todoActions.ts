@@ -8,7 +8,7 @@ export const changeName = (event: any) => ({
 })
 
 export const search = (_name?: string) => {
-    let url = `${BASE_URL}/task`;
+    let url = `${BASE_URL}/tasks`;
     if(_name) url = `${url}/search/${_name}`;
     const request = axios.get(url);
     return {

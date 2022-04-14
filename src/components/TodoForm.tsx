@@ -1,4 +1,4 @@
-import React, { Component, Props } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Input, Stack } from '@chakra-ui/react';
@@ -8,21 +8,13 @@ import { DeleteIcon } from '@chakra-ui/icons';
 
 import { changeName, search } from '../actions/todoActions';
 
-interface IProps extends Props<any> {
-    search?: any;
-    handleSearch: any,
-    handleAdd: any,
-    handleClean: any,
-    name: any,
-    handleChange: any,
-}
-class TodoForm extends Component<IProps, any> {
+class TodoForm extends Component<any, any> {
     constructor(props: any) {
         super(props);
         this.keyHandler = this.keyHandler.bind(this);
     }
 
-    componentWillUnmount() {
+    componentDidMount() {
         this.props.search()
     }
     
@@ -78,4 +70,4 @@ const mapStateToProps = (state: any) => ({ name: state.todo.name })
 
 const mapDispatchToProps = (dispatch: any) => bindActionCreators({ changeName, search }, dispatch);
 
-export default connect<{}, {}, IProps>(mapStateToProps, mapDispatchToProps)(TodoForm);
+export default connect<{}, {}, any>(mapStateToProps, mapDispatchToProps)(TodoForm);
