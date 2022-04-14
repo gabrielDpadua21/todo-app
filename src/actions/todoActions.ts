@@ -16,3 +16,11 @@ export const search = (_name?: string) => {
         payload: request
     }
 }
+
+export const add = (name: string) => {
+    const request = axios.post(`${BASE_URL}/tasks`, {name: name});
+    return {
+        type: 'TODO_ADD',
+        payload: request
+    }
+}
