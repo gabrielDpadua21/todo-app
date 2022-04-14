@@ -4,6 +4,7 @@ import { Container } from '@chakra-ui/react';
 import PageHeader from '../template/PageHeader';
 import TodoForm from './TodoForm';
 import TodoList from './TodoList';
+import { search } from '../actions/todoActions';
 
 const BASE_URL = 'http://localhost:3001'
 
@@ -69,12 +70,13 @@ export default class Todo extends Component<{}, {name: string, list: any}> {
         return (
             <Container maxW="container.lg">
                 <PageHeader name='Cadastar' small='Tasks'/>
-                <TodoForm 
+                <TodoForm
+                    search={search} 
                     name={this.state.name}  
                     handleAdd={this.handleAdd}
                     handleChange={this.handleChange}
                     handleSearch={this.handleSearch}
-                    hendleClean={this.handleClean}
+                    handleClean={this.handleClean}
                 />
                 <TodoList 
                     list={this.state.list}
