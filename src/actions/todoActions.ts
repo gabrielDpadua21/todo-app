@@ -18,9 +18,17 @@ export const search = (_name?: string) => {
 }
 
 export const add = (name: string) => {
-    const request = axios.post(`${BASE_URL}/tasks`, {name: name});
-    return {
-        type: 'TODO_ADD',
-        payload: request
+    return (dispatch: (arg0: { type: string; payload: any; }) => any) => {
+        axios.post(`${BASE_URL}/tasks`, {name: name})
+        .then(response => dispatch({type: 'TODO_ADD', payload: response.data}))
+        .then(response => dispatch(search()))
+    };
+}
+
+export const toggleMark = (id: number, status: boolean) => {
+    return (dispatch: (arg0: { type: string; payload: any; }) => any) => {
+        axios.put(`${BASE_URL}/tasks/${id}`, {status: status})
+            .then(response => dispatch({type: 'TODO_TOGGLE_DONE', payload: response.data}))
+            .then(response => dispatch(search()))
     }
 }

@@ -14,7 +14,8 @@ import {
     Text
 } from '@chakra-ui/react';
 import { CloseIcon, CheckIcon, RepeatIcon } from '@chakra-ui/icons';
-
+import { bindActionCreators } from 'redux';
+import { toggleMark } from '../actions/todoActions';
 
 const TodoList = (props: any) => {
 
@@ -25,6 +26,7 @@ const TodoList = (props: any) => {
 
     const renderRows = () => {
         const list = props.list || [];
+        const { toggleMark } = props;
 
         return list.map((todo: any) => 
             (
@@ -39,7 +41,7 @@ const TodoList = (props: any) => {
                           colorScheme='green'
                           size='lg'
                           mr={2}
-                          onClick={() => props.handleMarkDone(todo.id)}
+                          onClick={() => toggleMark(todo.id, true)}
                           hidden={todo.status}
                         />
                         <IconButton
@@ -48,7 +50,7 @@ const TodoList = (props: any) => {
                           colorScheme='yellow'
                           size='lg'
                           mr={2}
-                          onClick={() => props.handleMarkUndone(todo.id)}
+                          onClick={() => toggleMark(todo.id, false)}
                           hidden={!todo.status}
                         />
                         <IconButton 
@@ -95,4 +97,6 @@ const TodoList = (props: any) => {
 
 const mapStateToProps = (state: any) => ({list: state.todo.list})
 
-export default connect(mapStateToProps)(TodoList);
+const mapDispatchToProps = (dispatch: any) => bindActionCreators({toggleMark}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList);
