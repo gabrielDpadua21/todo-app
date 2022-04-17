@@ -6,7 +6,7 @@ import { SmallAddIcon } from '@chakra-ui/icons';
 import { SearchIcon } from '@chakra-ui/icons';
 import { DeleteIcon } from '@chakra-ui/icons';
 
-import { add, changeName, search } from '../actions/todoActions';
+import { add, changeName, search, clear } from '../actions/todoActions';
 
 class TodoForm extends Component<any, any> {
     constructor(props: any) {
@@ -19,13 +19,13 @@ class TodoForm extends Component<any, any> {
     }
     
     keyHandler(event: any) {
-        const { add, search, name } = this.props;
-        if(event.key === 'Enter') event.shiftKey ? search() : add(name);
-        if(event.key === 'Espace') this.props.handleClean();
+        const { add, search, name, clear } = this.props;
+        if(event.key === 'Enter') event.shiftKey ? search(name) : add(name);
+        if(event.key === 'Espace') clear();
     }
 
     render() {
-        const { add, search, name } = this.props;
+        const { add, search, name, clear, changeName } = this.props;
         return (
             <Stack
             as='form'
@@ -36,7 +36,7 @@ class TodoForm extends Component<any, any> {
             <Input 
                 placeholder='Adcione uma task' 
                 value={name}
-                onChange={this.props.changeName}
+                onChange={event => changeName(event)}
                 onKeyUp={this.keyHandler}
             />
             <Button 
@@ -52,7 +52,7 @@ class TodoForm extends Component<any, any> {
                 colorScheme='green'
                 variant='solid'
                 pl='6'
-                onClick={() => search()}
+                onClick={() => search(name)}
             >
             </Button>
             <Button 
@@ -60,7 +60,7 @@ class TodoForm extends Component<any, any> {
                 colorScheme='red'
                 variant='solid'
                 pl='6'
-                onClick={this.props.handleClean}
+                onClick={() => clear()}
             >
             </Button>
         </Stack>
@@ -70,6 +70,6 @@ class TodoForm extends Component<any, any> {
 
 const mapStateToProps = (state: any) => ({ name: state.todo.name })
 
-const mapDispatchToProps = (dispatch: any) => bindActionCreators({ add, changeName, search }, dispatch);
+const mapDispatchToProps = (dispatch: any) => bindActionCreators({ add, changeName, search, clear }, dispatch);
 
 export default connect<{}, {}, any>(mapStateToProps, mapDispatchToProps)(TodoForm);

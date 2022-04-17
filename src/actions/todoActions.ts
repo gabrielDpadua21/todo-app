@@ -25,10 +25,22 @@ export const add = (name: string) => {
     };
 }
 
-export const toggleMark = (id: number, status: boolean) => {
+export const toggleMark = (id: number, status: boolean, _name?: string) => {
     return (dispatch: (arg0: { type: string; payload: any; }) => any) => {
         axios.put(`${BASE_URL}/tasks/${id}`, {status: status})
             .then(response => dispatch({type: 'TODO_TOGGLE_DONE', payload: response.data}))
+            .then(response => dispatch(search(_name)))
+    }
+}
+
+export const remove = (id: number) => {
+    return (dispatch: (arg0: { type: string; payload: any; }) => any) => {
+        axios.delete(`${BASE_URL}/tasks/${id}`)
+            .then(response => dispatch({type: 'TODO_DELETE', payload: response.data}))
             .then(response => dispatch(search()))
     }
+}
+
+export const clear = () => {
+    return [ { type: 'TODO_CLEAR' }, search()]
 }

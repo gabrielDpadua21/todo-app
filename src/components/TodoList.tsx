@@ -15,7 +15,7 @@ import {
 } from '@chakra-ui/react';
 import { CloseIcon, CheckIcon, RepeatIcon } from '@chakra-ui/icons';
 import { bindActionCreators } from 'redux';
-import { toggleMark } from '../actions/todoActions';
+import { toggleMark, remove } from '../actions/todoActions';
 
 const TodoList = (props: any) => {
 
@@ -26,7 +26,7 @@ const TodoList = (props: any) => {
 
     const renderRows = () => {
         const list = props.list || [];
-        const { toggleMark } = props;
+        const { toggleMark, remove } = props;
 
         return list.map((todo: any) => 
             (
@@ -41,7 +41,7 @@ const TodoList = (props: any) => {
                           colorScheme='green'
                           size='lg'
                           mr={2}
-                          onClick={() => toggleMark(todo.id, true)}
+                          onClick={() => toggleMark(todo.id, true, todo.name)}
                           hidden={todo.status}
                         />
                         <IconButton
@@ -50,7 +50,7 @@ const TodoList = (props: any) => {
                           colorScheme='yellow'
                           size='lg'
                           mr={2}
-                          onClick={() => toggleMark(todo.id, false)}
+                          onClick={() => toggleMark(todo.id, false, todo.name)}
                           hidden={!todo.status}
                         />
                         <IconButton 
@@ -58,7 +58,7 @@ const TodoList = (props: any) => {
                             icon={<CloseIcon />} 
                             colorScheme='red'
                             size='lg'
-                            onClick={() => props.handleRemove(todo.id)}
+                            onClick={() => remove(todo.id)}
                         />
                     </Td>
                 </Tr>
@@ -97,6 +97,6 @@ const TodoList = (props: any) => {
 
 const mapStateToProps = (state: any) => ({list: state.todo.list})
 
-const mapDispatchToProps = (dispatch: any) => bindActionCreators({toggleMark}, dispatch);
+const mapDispatchToProps = (dispatch: any) => bindActionCreators({toggleMark, remove}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoList);
