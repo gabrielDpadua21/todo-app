@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { 
     Table, 
     TableCaption, 
@@ -13,7 +14,8 @@ import {
     Text
 } from '@chakra-ui/react';
 import { CloseIcon, CheckIcon, RepeatIcon } from '@chakra-ui/icons';
-
+import { bindActionCreators } from 'redux';
+import { toggleMark, remove } from '../actions/todoActions';
 
 const TodoList = (props: any) => {
 
@@ -24,6 +26,7 @@ const TodoList = (props: any) => {
 
     const renderRows = () => {
         const list = props.list || [];
+        const { toggleMark, remove, name } = props;
 
         return list.map((todo: any) => 
             (
@@ -38,7 +41,7 @@ const TodoList = (props: any) => {
                           colorScheme='green'
                           size='lg'
                           mr={2}
-                          onClick={() => props.handleMarkDone(todo.id)}
+                          onClick={() => toggleMark(todo.id, true, name)}
                           hidden={todo.status}
                         />
                         <IconButton
@@ -47,7 +50,7 @@ const TodoList = (props: any) => {
                           colorScheme='yellow'
                           size='lg'
                           mr={2}
-                          onClick={() => props.handleMarkUndone(todo.id)}
+                          onClick={() => toggleMark(todo.id, false, name)}
                           hidden={!todo.status}
                         />
                         <IconButton 
@@ -55,7 +58,7 @@ const TodoList = (props: any) => {
                             icon={<CloseIcon />} 
                             colorScheme='red'
                             size='lg'
-                            onClick={() => props.handleRemove(todo.id)}
+                            onClick={() => remove(todo.id)}
                         />
                     </Td>
                 </Tr>
@@ -92,4 +95,8 @@ const TodoList = (props: any) => {
     )
 }
 
-export default TodoList;
+const mapStateToProps = (state: any) => ({list: state.todo.list, name: state.todo.name})
+
+const mapDispatchToProps = (dispatch: any) => bindActionCreators({toggleMark, remove}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList);

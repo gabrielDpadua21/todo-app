@@ -1,18 +1,33 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Button, Input, Stack } from '@chakra-ui/react';
 import { SmallAddIcon } from '@chakra-ui/icons';
 import { SearchIcon } from '@chakra-ui/icons';
 import { DeleteIcon } from '@chakra-ui/icons';
 
-const TodoForm = (props: any) => {
+import { add, changeName, search, clear } from '../actions/todoActions';
 
-    const keyHandler = (event: any) => {
-        if(event.key === 'Enter') event.shiftKey ? props.hendleSearch() : props.hendleAdd();
-        if(event.key === 'Espace') props.handleClean();
+class TodoForm extends Component<any, any> {
+    constructor(props: any) {
+        super(props);
+        this.keyHandler = this.keyHandler.bind(this);
     }
 
-    return (
-        <Stack
+    componentDidMount() {
+        this.props.search()
+    }
+    
+    keyHandler(event: any) {
+        const { add, search, name, clear } = this.props;
+        if(event.key === 'Enter') event.shiftKey ? search(name) : add(name);
+        if(event.key === 'Espace') clear();
+    }
+
+    render() {
+        const { add, search, name, clear, changeName } = this.props;
+        return (
+            <Stack
             as='form'
             pt={5}
             direction='row'
@@ -20,16 +35,16 @@ const TodoForm = (props: any) => {
         >
             <Input 
                 placeholder='Adcione uma task' 
-                value={props.name}
-                onChange={props.handleChange}
-                onKeyUp={keyHandler}
+                value={name}
+                onChange={event => changeName(event)}
+                onKeyUp={this.keyHandler}
             />
             <Button 
                 leftIcon={<SmallAddIcon />} 
                 colorScheme="blue" 
                 variant="solid"
                 pl='6'
-                onClick={props.handleAdd}
+                onClick={() => add(name)}
             >
             </Button>
             <Button 
@@ -37,7 +52,7 @@ const TodoForm = (props: any) => {
                 colorScheme='green'
                 variant='solid'
                 pl='6'
-                onClick={props.handleSearch}
+                onClick={() => search(name)}
             >
             </Button>
             <Button 
@@ -45,11 +60,16 @@ const TodoForm = (props: any) => {
                 colorScheme='red'
                 variant='solid'
                 pl='6'
-                onClick={props.hendleClean}
+                onClick={() => clear()}
             >
             </Button>
         </Stack>
-    )
+        )
+    }
 }
 
-export default TodoForm;
+const mapStateToProps = (state: any) => ({ name: state.todo.name })
+
+const mapDispatchToProps = (dispatch: any) => bindActionCreators({ add, changeName, search, clear }, dispatch);
+
+export default connect<{}, {}, any>(mapStateToProps, mapDispatchToProps)(TodoForm);
