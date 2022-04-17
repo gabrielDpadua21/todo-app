@@ -26,7 +26,7 @@ const TodoList = (props: any) => {
 
     const renderRows = () => {
         const list = props.list || [];
-        const { toggleMark, remove } = props;
+        const { toggleMark, remove, name } = props;
 
         return list.map((todo: any) => 
             (
@@ -41,7 +41,7 @@ const TodoList = (props: any) => {
                           colorScheme='green'
                           size='lg'
                           mr={2}
-                          onClick={() => toggleMark(todo.id, true, todo.name)}
+                          onClick={() => toggleMark(todo.id, true, name)}
                           hidden={todo.status}
                         />
                         <IconButton
@@ -50,7 +50,7 @@ const TodoList = (props: any) => {
                           colorScheme='yellow'
                           size='lg'
                           mr={2}
-                          onClick={() => toggleMark(todo.id, false, todo.name)}
+                          onClick={() => toggleMark(todo.id, false, name)}
                           hidden={!todo.status}
                         />
                         <IconButton 
@@ -95,7 +95,7 @@ const TodoList = (props: any) => {
     )
 }
 
-const mapStateToProps = (state: any) => ({list: state.todo.list})
+const mapStateToProps = (state: any) => ({list: state.todo.list, name: state.todo.name})
 
 const mapDispatchToProps = (dispatch: any) => bindActionCreators({toggleMark, remove}, dispatch);
 
